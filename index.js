@@ -12,14 +12,18 @@ app.get('/byebye', function (req, res) {
 	}
 });
 
-
+const http = require('http');
+const fs = require('fs');
 app.get('*', function (req, res) {
 	if(req.query.name){
 	    res.send('Hello '+req.query.name);
 	}
 	else{
-		//res.status(400).send("Wrong (400 Bad Request)");
-		res.redirect("https://www.google.com/webhp?hl=zh-TW&sa=X&ved=0ahUKEwju0L-xmJbpAhVlyosBHSEHDn8QPAgH");
+		res.statusCode=200;
+		res.setHeader('Content-Type','text/html');
+		const html=fs.readFileSync('default.html','utf8');
+		res.write(html);
+		res.end();
 	}
 });
 
